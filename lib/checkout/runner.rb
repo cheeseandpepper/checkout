@@ -5,11 +5,7 @@ module Checkout
     attr_accessor :max, :branches, :branch_choice_object, :selection, :branch
 
     def initialize(max)
-      if max.nil?
-        @max ||= 10
-      else
-        @max ||= max.to_i
-      end
+      get_max(max)
       run!
     end
 
@@ -20,6 +16,14 @@ module Checkout
     end
 
     private
+
+    def get_max(val)
+      if val.nil?
+        @max ||= 10
+      else
+        @max = val
+      end
+    end
 
     def ask_for_selection
       puts 'Choose a branch...'
