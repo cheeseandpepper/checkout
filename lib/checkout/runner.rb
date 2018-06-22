@@ -21,7 +21,7 @@ module Checkout
       if val.nil?
         @max ||= 10
       else
-        @max = val
+        @max = val.to_i
       end
     end
 
