@@ -46,6 +46,7 @@ module Checkout
     def display_branches
       branch_choice_object.each do |k, v|
         dashes = "-" * (5 - k.to_s.size)
+        puts "#{k.to_s.colorize(:yellow)} #{dashes} #{v.colorize(:green)}"
       end
     end
 
