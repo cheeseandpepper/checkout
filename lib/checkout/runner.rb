@@ -6,16 +6,21 @@ module Checkout
 
     def initialize(max)
       if max.nil?
+        puts "max is 10"
         @max ||= 10
       else
-        @max ||= max
+        puts "max is #{max}"
+        @max ||= max.to_i
       end
       run!
     end
 
     def run!
+      puts "asking"
       ask_for_selection
+      puts 'mapping selection'
       map_selection_to_branch
+      puts 'checking out'
       checkout
     end
 
@@ -25,17 +30,20 @@ module Checkout
       puts 'Choose a branch...'
       puts ''
       display_branches
-      @selection ||= gets.chomp
+      @selection ||= STDIN.gets.chomp
     end
 
     def map_selection_to_branch
-      @branch ||= branch_choice_object[selection]
+      puts "selection is #{selection}"
+      @branch ||= branch_choice_object[selection.to_i]
+      puts "branch is #{@branch}"
+      puts "branch choice object is #{branch_choice_object}"
     end
 
     def branches
       @branches ||= `git for-each-ref --sort=-committerdate refs/heads/`
                       .split(/\n/)
-                      .map { |branch| branch.match(/heads\//).post_match }
+                      .map { |b| b.match(/heads\//).post_match }
     end
 
     def branch_choice_object
@@ -45,8 +53,12 @@ module Checkout
 
     def display_branches
       branch_choice_object.each do |k, v|
-        dashes = "-" * (5 - k.size)
-        puts "#{k.colorize(:yellow)} #{dashes} #{branch.colorize(:green)}"
+        puts "k is #{k}"
+        puts "v is #{v}"
+        puts "k dot size is #{k.to_s.size}"
+        puts "branch is #{branch}"
+        dashes = "-" * (5 - k.to_s.size)
+        puts "#{k.to_s.colorize(:yellow)} #{dashes} #{v.colorize(:green)}"
       end
     end
 
