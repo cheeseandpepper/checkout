@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/checkout'
+require_relative '../lib/checkout.rb'
 Checkout::Runner.new(ARGV[0]).run!

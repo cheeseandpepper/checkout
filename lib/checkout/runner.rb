@@ -2,10 +2,14 @@
 
 module Checkout
   class Runner
-    attr_reader :max, :branches, :branch_choice_object, :selection, :branch
+    attr_accessor :max, :branches, :branch_choice_object, :selection, :branch
 
-    def initialize(max=10)
-      @max ||= max
+    def initialize(max)
+      if max.nil?
+        @max ||= 10
+      else
+        @max ||= max
+      end
       run!
     end
 
@@ -20,7 +24,7 @@ module Checkout
     def ask_for_selection
       puts 'Choose a branch...'
       puts ''
-      puts branch_choice_object
+      display_branches
       @selection ||= gets.chomp
     end
 
@@ -35,10 +39,19 @@ module Checkout
     end
 
     def branch_choice_object
-      @branch_choice_object ||= Hash[(0...branches.size).zip(branches)]
+      limit = (max > branches.size) ? branches.size : max
+      @branch_choice_object ||= Hash[(0...limit).zip(branches)]
+    end
+
+    def display_branches
+      branch_choice_object.each do |k, v|
+        dashes = "-" * (5 - k.size)
+        puts "#{k.colorize(:yellow)} #{dashes} #{branch.colorize(:green)}"
+      end
     end
 
     def checkout
+      puts "Now checking out #{branch}"
       `git checkout #{branch}`
     end
 

@@ -11,6 +11,8 @@ Gem::Specification.new do |s|
   s.executables   = ["checkout"]  
   
   s.files = [
-    "lib/checkout.rb"
+    "lib/checkout.rb",
+    "lib/checkout/runner.rb",
+    "lib/checkout/version.rb"
   ]
 end
