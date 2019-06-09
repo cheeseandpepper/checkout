@@ -9,7 +9,9 @@ Gem::Specification.new do |s|
   s.summary       = %q{checkout lets you switch branches easily}
   s.require_paths = ["lib"]
   s.executables   = ["checkout"]  
-  
+
+  s.add_dependency 'colorize', '~> 0.8'
+
   s.files = [
     "lib/checkout.rb",
     "lib/checkout/runner.rb",
